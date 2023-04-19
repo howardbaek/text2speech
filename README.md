@@ -35,11 +35,21 @@ each service separately, to be one function at least:
 
 ``` r
 tts_auth("google")
-#> [1] TRUE
+#> [1] FALSE
 tts_auth("amazon")
-#> [1] TRUE
+#> Warning in pollyHTTP(action = "voices", verb = "GET", query = query, ...):
+#> Forbidden (HTTP 403).
+#> Warning in structure(out[["Voices"]], NextToken = out[["NextToken"]]): Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.
+#>   Consider 'structure(list(), *)' instead.
+#> Warning in pollyHTTP(action = "voices", verb = "GET", query = query, ...):
+#> Forbidden (HTTP 403).
+#> Warning in structure(out[["Voices"]], NextToken = out[["NextToken"]]): Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.
+#>   Consider 'structure(list(), *)' instead.
+#> [1] FALSE
 tts_auth("microsoft")
-#> [1] TRUE
+#> Error in ms_get_tts_key(api_key = api_key, error = TRUE) : 
+#>   MS API key not found, please set option('ms_tts_key') for general use or set environment variable MS_TTS_API_KEY, to be accessed by Sys.getenv('MS_TTS_API_KEY')
+#> [1] FALSE
 ```
 
 ## Voices
@@ -49,59 +59,41 @@ Listing out different voices for each service.
 ``` r
 df = tts_voices(service = "microsoft")
 print(head(df))
-#>                                                             voice
-#> 1      Microsoft Server Speech Text to Speech Voice (ar-EG, Hoda)
-#> 2     Microsoft Server Speech Text to Speech Voice (ar-SA, Naayf)
-#> 3      Microsoft Server Speech Text to Speech Voice (bg-BG, Ivan)
-#> 4 Microsoft Server Speech Text to Speech Voice (ca-ES, HerenaRUS)
-#> 5     Microsoft Server Speech Text to Speech Voice (cs-CZ, Jakub)
-#> 6  Microsoft Server Speech Text to Speech Voice (da-DK, HelleRUS)
+#>                                                                 voice
+#> 2          Microsoft Server Speech Text to Speech Voice (ar-EG, Hoda)
+#> 3   Microsoft Server Speech Text to Speech Voice (ar-EG, SalmaNeural)
+#> 1  Microsoft Server Speech Text to Speech Voice (ar-EG, ShakirNeural)
+#> 4 Microsoft Server Speech Text to Speech Voice (ar-SA, ZariyahNeural)
+#> 5         Microsoft Server Speech Text to Speech Voice (ar-SA, Naayf)
+#> 6   Microsoft Server Speech Text to Speech Voice (ar-SA, HamedNeural)
 #>                language language_code gender   service
-#> 1        Arabic (Egypt)         ar-EG Female microsoft
-#> 2 Arabic (Saudi Arabia)         ar-SA   Male microsoft
-#> 3             Bulgarian         bg-BG   Male microsoft
-#> 4       Catalan (Spain)         ca-ES Female microsoft
-#> 5                 Czech         cs-CZ   Male microsoft
-#> 6                Danish         da-DK Female microsoft
+#> 2       Arabic (Arabic)         ar-EG Female microsoft
+#> 3       Arabic (Arabic)         ar-EG Female microsoft
+#> 1       Arabic (Arabic)         ar-EG   Male microsoft
+#> 4 Arabic (Saudi Arabia)         ar-SA Female microsoft
+#> 5 Arabic (Saudi Arabia)         ar-SA   Male microsoft
+#> 6 Arabic (Saudi Arabia)         ar-SA   Male microsoft
 
 if (tts_google_auth()) {
   df = tts_voices(service = "google")
   print(head(df))
 }
-#>              voice language language_code gender service
-#> 1  ar-XA-Wavenet-A     <NA>         ar-XA FEMALE  google
-#> 2  ar-XA-Wavenet-B     <NA>         ar-XA   MALE  google
-#> 3  ar-XA-Wavenet-C     <NA>         ar-XA   MALE  google
-#> 4 ar-XA-Standard-B     <NA>         ar-XA   MALE  google
-#> 5 ar-XA-Standard-A     <NA>         ar-XA FEMALE  google
-#> 6 ar-XA-Standard-C     <NA>         ar-XA   MALE  google
 if (tts_amazon_auth()) {
   df = tts_voices(service = "amazon")
   print(head(df))
 }
-#>   voice         language language_code gender service
-#> 1 Zeina           Arabic           arb Female  amazon
-#> 2 Zhiyu Chinese Mandarin        cmn-CN Female  amazon
-#> 3  Naja           Danish         da-DK Female  amazon
-#> 4  Mads           Danish         da-DK   Male  amazon
-#> 5 Ruben            Dutch         nl-NL   Male  amazon
-#> 6 Lotte            Dutch         nl-NL Female  amazon
+#> Warning in pollyHTTP(action = "voices", verb = "GET", query = query, ...):
+#> Forbidden (HTTP 403).
+#> Warning in structure(out[["Voices"]], NextToken = out[["NextToken"]]): Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.
+#>   Consider 'structure(list(), *)' instead.
+#> Warning in pollyHTTP(action = "voices", verb = "GET", query = query, ...):
+#> Forbidden (HTTP 403).
+#> Warning in structure(out[["Voices"]], NextToken = out[["NextToken"]]): Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.
+#>   Consider 'structure(list(), *)' instead.
 if (tts_microsoft_auth()) {
   df = tts_voices(service = "microsoft")
   print(head(df))
 }
-#>                                                             voice
-#> 1      Microsoft Server Speech Text to Speech Voice (ar-EG, Hoda)
-#> 2     Microsoft Server Speech Text to Speech Voice (ar-SA, Naayf)
-#> 3      Microsoft Server Speech Text to Speech Voice (bg-BG, Ivan)
-#> 4 Microsoft Server Speech Text to Speech Voice (ca-ES, HerenaRUS)
-#> 5     Microsoft Server Speech Text to Speech Voice (cs-CZ, Jakub)
-#> 6  Microsoft Server Speech Text to Speech Voice (da-DK, HelleRUS)
-#>                language language_code gender   service
-#> 1        Arabic (Egypt)         ar-EG Female microsoft
-#> 2 Arabic (Saudi Arabia)         ar-SA   Male microsoft
-#> 3             Bulgarian         bg-BG   Male microsoft
-#> 4       Catalan (Spain)         ca-ES Female microsoft
-#> 5                 Czech         cs-CZ   Male microsoft
-#> 6                Danish         da-DK Female microsoft
+#> Error in ms_get_tts_key(api_key = api_key, error = TRUE) : 
+#>   MS API key not found, please set option('ms_tts_key') for general use or set environment variable MS_TTS_API_KEY, to be accessed by Sys.getenv('MS_TTS_API_KEY')
 ```
